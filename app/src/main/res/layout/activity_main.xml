@@ -7,7 +7,7 @@
     tools:context=".MainActivity" >
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonStartSimulation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cardViewAdresse"
@@ -64,6 +64,7 @@
                 android:layout_marginBottom="30dp">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/cityTextInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Ville" />
@@ -75,6 +76,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/adressTextInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Adresse" />
