@@ -67,7 +67,8 @@
                     android:id="@+id/cityTextInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Ville" />
+                    android:hint="Ville"
+                    android:text="Laval" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -79,7 +80,8 @@
                     android:id="@+id/adressTextInput"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Adresse" />
+                    android:hint="Adresse"
+                    android:text="9 rue de Bretagne" />
 
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>

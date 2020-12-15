@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Math</string>
     <string name="title_activity_maps">Map</string>
+    <string name="speed_1">Speed x1</string>
+    <string name="speed_1_5">Speed x1.5</string>
+    <string name="speed_2">Speed x2</string>
+    <string name="speed_3">Speed x3</string>
+    <string name="speed_5">Speed x5</string>
 </resources>
