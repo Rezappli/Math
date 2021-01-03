@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
                 LatLng pos = getLocationFromAddress(adressText + "," + cityText);
                 if(pos != null){
                     MapsActivity.target = pos;
+                    MapsMathActivity.target = pos;
                     startActivity(new Intent(MainActivity.this, MapsActivity.class));
                 }else{
                     city.setError("Position introuvable");

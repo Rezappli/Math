@@ -51,6 +51,7 @@
             android:layout_marginBottom="40dp"
             android:background="@color/purple_700"
             android:drawableEnd="@drawable/ic_baseline_arrow_forward_ios_24"
+            android:paddingEnd="5dp"
             android:text="Suivant"
             android:textColor="#FFFFFF"
             android:visibility="visible" />
