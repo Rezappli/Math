@@ -3,6 +3,7 @@ package com.example.math;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.location.Location;
 import android.os.Build;
@@ -98,65 +99,6 @@ public class MapsMathActivity extends AppCompatActivity implements OnMapReadyCal
 
         h1.postDelayed(r1,0);
 
-
-
-
-
-        satelliteList = new ArrayList<>();
-        h = new Handler();
-        r = new Runnable() {
-            @RequiresApi(api = Build.VERSION_CODES.KITKAT)
-            @Override
-            public void run() {
-                float[] results = new float[3];
-                if(satelliteList != null) {
-                    for (Satellite s : satelliteList) {
-                        if(s.getName().equalsIgnoreCase("SAT1")){
-                            Location.distanceBetween(s.getLatLng().latitude+0.1*speed, s.getLatLng().longitude, target.latitude, target.longitude, results);
-                            if(results[0] <= 2000000){
-
-                                mMap.addMarker(new MarkerOptions().title("Votre position").snippet("Latitude : " + target.latitude + " Longitude : " + target.longitude).position(target)
-                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-                                h.removeCallbacks(r);
-                            }else {
-                                Log.w("Satellite", "Position : " + s.getLatLng().toString());
-                                s.setLatLng(new LatLng(s.getLatLng().latitude + 0.1 * speed, s.getLatLng().longitude));
-                                Log.w("Satellite", "Position : " + s.getLatLng().toString());
-                            }
-                        }
-                        if(s.getName().equalsIgnoreCase("SAT2")){
-                            Location.distanceBetween(s.getLatLng().latitude, s.getLatLng().longitude+0.1*speed, target.latitude, target.longitude, results);
-                            if(results[0] <= 2000000){
-
-                                h.removeCallbacks(r);
-
-                            }else {
-                                Log.w("Satellite", "Position : " + s.getLatLng().toString());
-                                s.setLatLng(new LatLng(s.getLatLng().latitude, s.getLatLng().longitude  + 0.1 * speed));
-                                Log.w("Satellite", "Position : " + s.getLatLng().toString());
-                            }
-                        }
-                        if(s.getName().equalsIgnoreCase("SAT3")){
-                            Location.distanceBetween(s.getLatLng().latitude, s.getLatLng().longitude-0.1*speed, target.latitude, target.longitude, results);
-                            if(results[0] <= 2000000){
-                                mMap.addMarker(new MarkerOptions().title("Votre position").snippet("Latitude : " + target.latitude + " Longitude : " + target.longitude).position(target)
-                                        .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_AZURE)));
-                                h.removeCallbacks(r);
-                            }else {
-                                Log.w("Satellite", "Position : " + s.getLatLng().toString());
-                                s.setLatLng(new LatLng(s.getLatLng().latitude, s.getLatLng().longitude  - 0.1 * speed));
-                                Log.w("Satellite", "Position : " + s.getLatLng().toString());
-                            }
-                        }
-
-                    }
-                    updateMap();
-                }
-
-
-            }
-        };
-
         //init();
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
@@ -194,18 +136,18 @@ public class MapsMathActivity extends AppCompatActivity implements OnMapReadyCal
         mMap.addCircle(new CircleOptions().center(latlngS).strokeWidth(5).fillColor(Color.TRANSPARENT).radius(dist).strokeColor(Color.RED));
         instructions.setText("Cette donnée ne suffit pas à connaître précisément la position du récepteur. " +
                 "Le récepteur capte donc le signal d’un deuxième satellite et effectue la même opération : \n" +
-                "t = "+ dist/c + "ms" + " donc d = t*c (c étant la vitesse de la lumière) = "+ dist + "m");
+                "t = "+ dist/c + "s" + " donc d = t*c (c étant la vitesse de la lumière) = "+ dist + "m");
         etape = 5;
     }
 
-    public void etape7(){
-        instructions.setText("Pour faire le" +
+    public void etape6(){
+        instructions.setText("Pour faire le " +
                 "lien avec la position exprimée à l'aide de la longitude, la latitude et l’altitude," +
                 "nous faisons le choix suivant : \n" +
                 "• le centre des coordonnées est le centre de la Terre ;\n" +
                 "• l’axe z passe par les pôles et est orienté vers le pôle Nord ;\n" +
                 "• les axes x et y sont dans le plan de l’ ́equateur ;\n" +
-                "• le demi-axe x positif (respectivement demi-axe y positif) pointe à la\n" +
+                "• le demi-axe x positif (respectivement demi-axe y positif) pointe à la " +
                 "longitude 0 (respectivement 90 degrés ouest).");
         LatLng latlngX = new LatLng(-80, 0);
         LatLng latlngX1 = new LatLng(80, 0);
@@ -214,9 +156,6 @@ public class MapsMathActivity extends AppCompatActivity implements OnMapReadyCal
                 .width(5)
                 .color(Color.GREEN));
 
-        double x = 6365000*Math.cos(target.longitude) * Math.cos(target.latitude);
-        double y= 6365000*Math.sin(target.longitude) * Math.cos(target.latitude);
-        double z = 6365000*Math.sin(target.latitude);
 
 
         LatLng latlngY = new LatLng(0, -90);
@@ -233,46 +172,54 @@ public class MapsMathActivity extends AppCompatActivity implements OnMapReadyCal
                 .width(5)
                 .color(Color.BLUE));*/
 
-        etape = 8;
+        etape = 7;
     }
+
 
     public void etape5(){
-
-        LatLng latlngS = s.getLatLng();
-        LatLng latlngS1 = s1.getLatLng();
-
-        float[] results = new float[3];
-        Location.distanceBetween(latlngS.latitude, latlngS.longitude, latlngS1.latitude, latlngS1.longitude, results);
-        double middle = results[0];
-
-        LatLng latLngMiddle = new LatLng(0+middle,-15);
-        etape = 6;
-
-
-
-
-    }
-
-    public void etape6(){
         ajoutMarker(s2);
         LatLng latlngS = new LatLng(s2.getLatLng().latitude, s2.getLatLng().longitude);
         float[] results = new float[3];
         Location.distanceBetween(latlngS.latitude, latlngS.longitude, target.latitude, target.longitude, results);
         double dist = results[0];
         mMap.addCircle(new CircleOptions().center(latlngS).strokeWidth(5).fillColor(Color.TRANSPARENT).radius(dist).strokeColor(Color.RED));
-        instructions.setText("Puis un troisième sattelite");
-        etape = 7;
+        instructions.setText("Puis un troisième sattelite \n " +
+                "t = "+ dist/c + "s \n" + " donc d = t*c (c étant la vitesse de la lumière) = "+ dist + "m");
+        etape = 6;
 
+    }
+
+    private void etape7(){
+        instructions.setText("Le rayon de la Terre étant R (R est environ 6365 km). Si un point (x, y, z) est sur la sphère de" +
+                " rayon R, c’est-à-dire à l’altitude 0, alors sa longitude et sa latitude sont obtenues en résolvant le système d’équations\n" +
+                "x = R cosL cosl,\n y = R sinL cosl, \n z = R sinl. \n" +
+                "Comme l ∈ [−90 ◦, 90 ◦], on obtient\n" +
+                "l = arcsin z \n" +
+                "l = "+ target.latitude);
+        etape = 8;
     }
 
     private void etape8(){
-        instructions.setText("On connait maintenant votre position de longitude : "+target.longitude+" et de latitude : "+target.latitude);
+        instructions.setText("" +
+                "⎧                  \n" +
+                "⎪ cosL = x/(R cosl)\n"+
+                "⎨\n" +
+                "⎪ sinL = y/(R cosl)\n"+
+                "⎩                  \n" +
+                "L = " + target.longitude);
         m.remove();
         mMap.addMarker(new MarkerOptions().title("Votre potisition").snippet("Latitude : " + target.latitude + " Longitude : " + target.longitude).position(target)
                 .icon(BitmapDescriptorFactory.defaultMarker()));
-        etape = 9;
-        suivant.setText("Quitter");
+        suivant.setText("Menu");
+        suivant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getBaseContext(), MainActivity.class));
+            }
+        });
+
     }
+
 
     private void etape2() {
 
@@ -289,7 +236,7 @@ public class MapsMathActivity extends AppCompatActivity implements OnMapReadyCal
         instructions.setText("Le récepteur mesure le temps mis par le " +
                 "signal émis par le satellite pour parcourir la distance " +
                 "qui le sépare du satellite : \n" +
-                "t = "+ dist/c + "ms \n" + " donc d = t*c (c étant la vitesse de la lumière) = "+ dist + "m");
+                "t = "+ dist/c + "s \n" + " pour connaître la distance d = t*c (c étant la vitesse de la lumière) = "+ dist + "m");
 
         etape = 3;
 

@@ -34,30 +34,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener 
     private TextInputEditText city;
     private TextInputEditText adress;
 
-    GnssStatus.Callback mGnssStatusCallback;
-    LocationManager mLocationManager;
-
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mLocationManager =
-                (LocationManager) getSystemService(LOCATION_SERVICE);
-        mGnssStatusCallback = new GnssStatus.Callback() {
-            @Override
-            public void onSatelliteStatusChanged(@NonNull GnssStatus status) {
-                super.onSatelliteStatusChanged(status);
-                Log.w("Gnss", "Status : " + status.getSatelliteCount());
-            }
-        };
-
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            this.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 0);
-            return;
-        }
-        mLocationManager.registerGnssStatusCallback(mGnssStatusCallback);
 
         startSimulation = findViewById(R.id.buttonStartSimulation);
         city = findViewById(R.id.cityTextInput);
